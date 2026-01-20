@@ -5,16 +5,19 @@ import Results from "./components/Results";
 import { use } from "react";
 function App() {
   const [userInput, setUserInput] = useState({
-    initialInvestment: 0,
-    AnnualInvestment: 0,
-    ExpectedReturn: 0,
-    Duration: 0,
+    initialInvestment: 150000,
+    annualInvestment: 1200,
+    expectedReturn: 6,
+    duration: 10,
   });
+
+  const inputIsValed = userInput.duration >= 1;
+
   function handleUserInput(inputIdentifier, value) {
     setUserInput((prevUserInput) => {
       return {
         ...prevUserInput,
-        [inputIdentifier]: value,
+        [inputIdentifier]: +value,
       };
     });
   }
@@ -22,7 +25,10 @@ function App() {
     <>
       <Header />
       <UserInput onChangeInput={handleUserInput} input={userInput} />
-      <Results input={userInput}/>
+      {!inputIsValed && (
+        <p className="center">Please enter vaild duration.</p>
+      )}
+      {inputIsValed && <Results input={userInput} />}
     </>
   );
 }
