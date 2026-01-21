@@ -96,7 +96,7 @@ header p {
   color: #6b7280;
 }
 
-.controls input {
+/* .controls input {
   width: 100%;
   padding: 0.75rem 1rem;
   line-height: 1.5;
@@ -105,17 +105,17 @@ header p {
   border: 1px solid transparent;
   border-radius: 0.25rem;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-}
+} */
 
 label.invalid {
   color: #f87171;
 }
 
-input.invalid {
+/* input.invalid {
   color: #ef4444;
   border-color: #f73f3f;
   background-color: #fed2d2;
-}
+} */
 
 .actions {
   display: flex;

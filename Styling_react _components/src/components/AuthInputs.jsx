@@ -1,4 +1,20 @@
 import { useState } from "react";
+import { styled } from "styled-components";
+
+const Input = styled.input`
+  width: 100%;
+  padding: 0.75rem 1rem;
+  line-height: 1.5;
+
+  background-color: ${({$inValid }) => ($inValid ? "#fed2d2" : "#d1d5db")};
+  color: ${({ $inValid }) => ($inValid ? "#ef4444" : "#374151")};
+
+  border: 1px solid ${($inValid) => ($inValid ? "#f73f3f" : transparent)};
+  border-radius: 0.25rem;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+`;
 
 export default function AuthInputs() {
   const [enteredEmail, setEnteredEmail] = useState("");
@@ -25,17 +41,19 @@ export default function AuthInputs() {
       <div className="controls">
         <p>
           <label>Email</label>
-          <input
+          <Input
             type="email"
-            className={emailNotValid ? "invalid" : undefined}
+            // className={emailNotValid ? "invalid" : undefined}
+            $inValid={emailNotValid}
             onChange={(event) => handleInputChange("email", event.target.value)}
           />
         </p>
         <p>
           <label>Password</label>
-          <input
+          <Input
             type="password"
-            className={passwordNotValid ? "invalid" : undefined}
+            // className={passwordNotValid ? "invalid" : undefined}
+            $inValid={passwordNotValid}
             onChange={(event) =>
               handleInputChange("password", event.target.value)
             }
@@ -53,4 +71,3 @@ export default function AuthInputs() {
     </div>
   );
 }
-
