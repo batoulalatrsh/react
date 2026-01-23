@@ -14,6 +14,7 @@ export default function Player({
       onChangeName(symbol, playerName);
     }
   };
+  
   const handleChange = function (event) {
     setPlayerName(event.target.value);
   };
