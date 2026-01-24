@@ -1,4 +1,6 @@
 import { forwardRef, useImperativeHandle, useRef } from "react"; //use to support ref prop in old browsers
+import { createPortal } from "react-dom"; //kind of teleport this HTML code that will be rendered by this component into a different place in the DOM.
+
 const ResultModal = forwardRef(function ResultModal(
   { result, targetTime, onReset },
   ref,
@@ -7,6 +9,7 @@ const ResultModal = forwardRef(function ResultModal(
 
   const userLost = result <= 0;
   const formattedRemainingTime = (result / 1000).toFixed(2);
+  const score = Math.round((1 - result / (targetTime * 1000)) * 100);
 
   useImperativeHandle(ref, () => {
     return {
@@ -16,9 +19,10 @@ const ResultModal = forwardRef(function ResultModal(
     };
   });
 
-  return (
-    <dialog ref={dialog} className="result-modal">
+  return createPortal(
+    <dialog ref={dialog} className="result-modal" onClose={onReset}>
       {userLost && <h2>You lost!</h2>}
+      {!userLost && <h2>Your score: {score}</h2>}
       <p>
         The target time was <strong>{targetTime} seconds.</strong>
       </p>
@@ -29,7 +33,8 @@ const ResultModal = forwardRef(function ResultModal(
       <form action="dialog" onSubmit={onReset}>
         <button>Close</button>
       </form>
-    </dialog>
+    </dialog>,
+    document.getElementById("modal"),
   );
 });
 export default ResultModal;
