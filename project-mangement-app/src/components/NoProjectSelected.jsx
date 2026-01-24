@@ -1,6 +1,6 @@
 import photo from "../assets/no-projects.png";
 import Button from "./Button";
-export default function ({}) {
+export default function ({ onClicked }) {
   return (
     <div className="mt-24 text-center w-2/3">
       <img
@@ -15,7 +15,7 @@ export default function ({}) {
         Select a project or get started with a new one
       </p>
       <p className="mt-8">
-        <Button>Create new project</Button>
+        <Button onClick={onClicked}>Create new project</Button>
       </p>
     </div>
   );
