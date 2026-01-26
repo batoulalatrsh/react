@@ -8,23 +8,28 @@ function App() {
   const [projectState, setProjectState] = useState({
     selectedProjectId: undefined,
     projects: [],
+    tasks: [],
   });
 
-  function handleSelectedProject(id) {
+  function handleAddTask(text) {
     setProjectState((prevState) => {
+      const newTask = {
+        text: text,
+        projectId: prevState.selectedProjectId,
+        taskId: Math.random(),
+      };
+
       return {
         ...prevState,
-        selectedProjectId: id,
+        tasks: [newTask, ...prevState.tasks],
       };
     });
   }
-
-  function handleDeleteProject(id) {
+  function handleDeleteTask(id) {
     setProjectState((prevProject) => {
       return {
         ...prevProject,
-        selectedProjectId: undefined,
-        projects:prevProject.projects.filter((project)=>project.id!==id)
+        tasks: prevProject.tasks.filter((task) => task.taskId !== id),
       };
     });
   }
@@ -61,10 +66,37 @@ function App() {
     });
   }
 
+  function handleSelectedProject(id) {
+    setProjectState((prevState) => {
+      return {
+        ...prevState,
+        selectedProjectId: id,
+      };
+    });
+  }
+
+  function handleDeleteProject(id) {
+    setProjectState((prevProject) => {
+      return {
+        ...prevProject,
+        selectedProjectId: undefined,
+        projects: prevProject.projects.filter((project) => project.id !== id),
+      };
+    });
+  }
+
   const selectedProject = projectState.projects.find(
     (project) => project.id === projectState.selectedProjectId,
   );
-  let content = <SelectedProject project={selectedProject} onDelete={handleDeleteProject}/>;
+  let content = (
+    <SelectedProject
+      project={selectedProject}
+      onDelete={handleDeleteProject}
+      onAddTask={handleAddTask}
+      onDeleteTask={handleDeleteTask}
+      tasks={projectState.tasks}
+    />
+  );
   if (projectState.selectedProjectId === null) {
     content = <NewProject onAdd={handleAddProject} onCancel={handleCancel} />;
   } else if (projectState.selectedProjectId === undefined) {
@@ -76,6 +108,7 @@ function App() {
         onClicked={handleStartAddProject}
         projects={projectState.projects}
         onSelect={handleSelectedProject}
+        selectedProjectId={projectState.selectedProjectId}
       />
       {content}
     </main>
