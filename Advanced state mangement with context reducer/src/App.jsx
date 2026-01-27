@@ -3,7 +3,7 @@ import Product from "./components/Product.jsx";
 import Header from "./components/Header.jsx";
 import Shop from "./components/Shop.jsx";
 import { DUMMY_PRODUCTS } from "./dummy-products.js";
-
+import { CartContext } from "./store/shopping-cart-context.jsx";
 function App() {
   const [shoppingCart, setShoppingCart] = useState({
     items: [],
@@ -67,17 +67,20 @@ function App() {
 
   return (
     <>
-      <Header
-        cart={shoppingCart}
-        onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
-      />
-      <Shop>
-        {DUMMY_PRODUCTS.map((product) => (
-          <li key={product.id}>
-            <Product {...product} onAddToCart={handleAddItemToCart} />
-          </li>
-        ))}
-      </Shop>
+      <CartContext.Provider value={{ items: [] }}>
+        {/* provider use here to support old version of react */}
+        <Header
+          cart={shoppingCart}
+          onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
+        />
+        <Shop>
+          {DUMMY_PRODUCTS.map((product) => (
+            <li key={product.id}>
+              <Product {...product} onAddToCart={handleAddItemToCart} />
+            </li>
+          ))}
+        </Shop>
+      </CartContext.Provider>
     </>
   );
 }
