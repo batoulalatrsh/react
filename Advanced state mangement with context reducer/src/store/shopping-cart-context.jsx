@@ -1,4 +1,5 @@
 import { createContext } from "react";
-const CartContext = createContext({
+// wrapper wrap the component and have access to its initial value
+export const CartContext = createContext({
   items: [],
 });
