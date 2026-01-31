@@ -9,6 +9,7 @@ export default [
       "A library used for building mobile applications only.",
     ],
   },
+  
   {
     id: "q2",
     text: "What purpose do React hooks serve?",
