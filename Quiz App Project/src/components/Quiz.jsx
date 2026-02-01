@@ -1,36 +1,18 @@
 import { useState, useCallback } from "react";
 import QUESTIONS from "../questions.js";
 import Question from "./Question.jsx";
-import quizCompleteImg from "../assets/quiz-complete.png";
+import Summary from "./Summary.jsx";
 export default function Quiz({}) {
   const [userAnswer, setUserAnswer] = useState([]);
-  const [answerState, setAnswerState] = useState("");
 
-  const activeQuestionIndex =
-    answerState === "" ? userAnswer.length : userAnswer.length - 1;
+  const activeQuestionIndex = userAnswer.length;
   const quizIsComplete = activeQuestionIndex === QUESTIONS.length;
 
-  const handleSelectAnswer = useCallback(
-    function handleSelectAnswer(selectedAnswer) {
-      //To determine the selected answer
-      setAnswerState("answered");
-
-      setUserAnswer((prevAnswer) => [...prevAnswer, selectedAnswer]);
-
-      setTimeout(() => {
-        if (selectedAnswer === QUESTIONS[activeQuestionIndex].answers[0]) {
-          setAnswerState("correct");
-        } else {
-          setAnswerState("wrong");
-        }
-
-        setTimeout(() => {
-          setAnswerState("");
-        }, 2000);
-      }, 1000);
-    },
-    [activeQuestionIndex],
-  );
+  const handleSelectAnswer = useCallback(function handleSelectAnswer(
+    selectedAnswer,
+  ) {
+    setUserAnswer((prevAnswer) => [...prevAnswer, selectedAnswer]);
+  }, []);
 
   const handleSkipAnswer = useCallback(
     () => handleSelectAnswer(null),
@@ -38,22 +20,14 @@ export default function Quiz({}) {
   );
 
   if (quizIsComplete) {
-    return (
-      <div id="summary">
-        <img src={quizCompleteImg} alt="Quiz Complete" />
-        <h2>Quiz Completed!</h2>
-      </div>
-    );
+    return <Summary userAnswers={userAnswer}/>;
   }
 
   return (
     <div id="quiz">
       <Question
         key={activeQuestionIndex}
-        questionText={QUESTIONS[activeQuestionIndex].text}
-        answers={QUESTIONS[activeQuestionIndex].answers}
-        answerState={answerState}
-        selectedAnswer={userAnswer[userAnswer.length - 1]}
+        activeIndex={activeQuestionIndex}
         onSelectedAnswer={handleSelectAnswer}
         onSkipAnswer={handleSkipAnswer}
       />
