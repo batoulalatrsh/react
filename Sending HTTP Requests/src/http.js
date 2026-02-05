@@ -27,6 +27,7 @@ export async function updateUserPlaces(places) {
   return resData.message;
 }
 
+//The same function
 export async function fetchUserPlaces() {
   const response = await fetch("http://localhost:3000/user-places");
   const resData = await response.json();
