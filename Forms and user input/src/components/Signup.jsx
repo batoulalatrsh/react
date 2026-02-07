@@ -1,29 +1,83 @@
-import { useState } from "react";
+import {
+  isEmail,
+  isNotEmpty,
+  isEqualsToOtherValue,
+  hasMinLength,
+} from "../util/validation.js";
+import { useActionState } from "react";
 
 export default function Signup() {
-  const [passwordAreNotEqual, setPasswordAreNotEqual] = useState(false);
-  function handleSubmit(event) {
-    event.preventDefault();
+  // const [passwordAreNotEqual, setPasswordAreNotEqual] = useState(false);
+  // function handleSubmit(event) {
+  //   event.preventDefault();
+  //   //Built-in object in the browser ,we need to pass form to it
+  //   //all this input must have name properity
+  //   setPasswordAreNotEqual(false);
+  //   const fd = new FormData(event.target);
+  //   const acquisitionChannel = fd.getAll("acquisition");
+  //   const data = Object.fromEntries(fd.entries());
+  //   data.acquisition = acquisitionChannel;
 
-    //Built-in object in the browser ,we need to pass form to it
-    //all this input must have name properity
-    setPasswordAreNotEqual(false);
-    const fd = new FormData(event.target);
-    const acquisitionChannel = fd.getAll("acquisition");
-    const data = Object.fromEntries(fd.entries());
-    data.acquisition = acquisitionChannel;
+  //   if (data.password !== data["confirm-password"]) {
+  //     setPasswordAreNotEqual(true);
+  //     return;
+  //   }
+  //   // event.target.reset();
+  // }
 
-    if (data.password !== data["confirm-password"]) {
-      setPasswordAreNotEqual(true);
-      return;
+  /*------------------------------------------------------------- */
+  //action in native HTML used to define the path ,But in React is update of onSubmit
+  //and behind the scene call 'event.preventDefault();' ,func pass to action prop will take formData obj
+  //also reSet form after submit
+  function signupAction(formData) {
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirm-password");
+    const firstName = formData.get("first-name");
+    const lasttName = formData.get("last-name");
+    const role = formData.get("role");
+    const term = formData.get("terms");
+    const acquisitionChannel = formData.getAll("acquisition");
+
+    const error = [];
+
+    if (!isEmail(email)) {
+      error.push("Invalid email address.");
     }
 
-    console.log(data);
+    if (!isNotEmpty(password) || !hasMinLength(password, 6)) {
+      error.push("Use munst provide a password with at least six characters");
+    }
 
-    // event.target.reset();
+    if (!isEqualsToOtherValue(password, confirmPassword)) {
+      error.push("Password so not match");
+    }
+
+    if (!isNotEmpty(firstName) || !isNotEmpty(lasttName)) {
+      error.push("Please provide both first and last name");
+    }
+    if (!isNotEmpty(role)) {
+      error.push("Please select a role.");
+    }
+    if (!term) {
+      error.push("You must agree to the terms and conditions.");
+    }
+
+    if (acquisitionChannel.length === 0) {
+      error.push("Please select at least one acquisition channel.");
+    }
+
+    if (error.length > 0) {
+      return { errors: error };
+    }
+    return { errors: null };
+    //To use this error to check inputs we use useActionState hook
   }
+
+  useActionState();
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form action={signupAction}>
       <h2>Welcome on board!</h2>
       <p>We just need a little bit of data from you to get you started 🚀</p>
 
@@ -54,7 +108,7 @@ export default function Signup() {
             minLength={6}
           />
           <div className="control-error">
-            {passwordAreNotEqual && <p>Passwords must matche.</p>}
+            {/* {passwordAreNotEqual && <p>Passwords must matche.</p>} */}
           </div>
         </div>
       </div>
