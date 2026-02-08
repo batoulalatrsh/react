@@ -1,11 +1,25 @@
 {
   "opinions": [
     {
+      "id": 1770512442929,
+      "votes": 6,
+      "userName": "batoul",
+      "title": "betoooo",
+      "body": "nnbmfhbfvbjdhvyhfuylfhgbf"
+    },
+    {
+      "id": 1770511057402,
+      "votes": 1,
+      "userName": "batoul",
+      "title": "alatrsh",
+      "body": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+    },
+    {
       "id": 1,
       "userName": "Maximilian Schwarzmüller",
       "title": "Do yourself a favor and learn React!",
       "body": "React is an amazing JavaScript library!\n\nDespite all it's shortcomings.",
-      "votes": 0
+      "votes": 1
     },
     {
       "id": 2,
