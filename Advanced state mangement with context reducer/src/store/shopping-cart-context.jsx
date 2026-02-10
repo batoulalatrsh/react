@@ -9,6 +9,7 @@ export const CartContext = createContext({
 
 function shoppingCartReducer(state, action) {
   if (action.type === "ADD_ITEM") {
+    //you shoudn't edit initial state directly
     const updatedItems = [...state.items];
 
     const existingCartItemIndex = updatedItems.findIndex(
@@ -39,6 +40,8 @@ function shoppingCartReducer(state, action) {
       items: updatedItems,
     };
   }
+
+
 
   if (action.type === "UPDATE_TIME") {
     const updatedItems = [...state.items];

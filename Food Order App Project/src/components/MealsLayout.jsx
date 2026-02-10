@@ -3,7 +3,6 @@ import { fetchingMealsData } from "../https.js";
 import { useEffect, useState } from "react";
 import ErrorPage from "./ErrorPage.jsx";
 
-
 export default function MealsLayout({}) {
   const [fetchingMeals, setFetchingMeals] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
@@ -14,7 +13,7 @@ export default function MealsLayout({}) {
       setIsFetching(true);
       try {
         const meals = await fetchingMealsData();
-        console.log(meals);
+
         setFetchingMeals(meals);
         setIsFetching(false);
       } catch (err) {
