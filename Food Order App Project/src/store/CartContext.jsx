@@ -4,6 +4,7 @@ const CartContext = createContext({
   items: [],
   addItem: (item) => {},
   removeItem: (id) => {},
+  calcTotalPrice: () => {},
 });
 
 function cartReducer(state, action) {
@@ -75,11 +76,18 @@ export function CartContextProvider({ children }) {
       id,
     });
   }
+  function calcTotalPrice() {
+    return cartState.items.reduce(
+      (totalPrice, item) => totalPrice + item.quantity * item.price,
+      0,
+    );
+  }
 
   const ctxValue = {
     items: cartState.items,
     addItem: handleAddItemToCart,
     removeItem: handlRemoveItemFromCart,
+    calcTotalPrice,
   };
 
   console.log(ctxValue);
