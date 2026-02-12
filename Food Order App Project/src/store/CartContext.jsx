@@ -5,6 +5,7 @@ const CartContext = createContext({
   addItem: (item) => {},
   removeItem: (id) => {},
   calcTotalPrice: () => {},
+  clearCart: () => {},
 });
 
 function cartReducer(state, action) {
@@ -57,6 +58,10 @@ function cartReducer(state, action) {
     };
   }
 
+  if (action.type === "CLEAR_CART") {
+    return { ...state, items: [] };
+  }
+
   return state;
 }
 
@@ -76,6 +81,13 @@ export function CartContextProvider({ children }) {
       id,
     });
   }
+
+  function clearCart() {
+    cartDispatch({
+      type: "CLEAR_CART",
+    });
+  }
+
   function calcTotalPrice() {
     return cartState.items.reduce(
       (totalPrice, item) => totalPrice + item.quantity * item.price,
@@ -88,6 +100,7 @@ export function CartContextProvider({ children }) {
     addItem: handleAddItemToCart,
     removeItem: handlRemoveItemFromCart,
     calcTotalPrice,
+    clearCart,
   };
 
   console.log(ctxValue);
