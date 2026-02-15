@@ -26,7 +26,6 @@ const counterSubscriber = () => {
   const latestState = store.getState();
   console.log(latestState);
 };
-
 //subscriber function will be execute when ever
 store.subscribe(counterSubscriber);
 
