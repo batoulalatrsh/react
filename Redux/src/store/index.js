@@ -1,40 +1,9 @@
 // const redux = require("redux");
 import { createStore } from "redux";
-import { createSlice, configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 
-const initialCounterState = { counter: 0, showCounter: true };
-const initialAuthState = { isAuthenticated: false };
-const counterSlice = createSlice({
-  name: "counter",
-  initialState: initialCounterState,
-  reducers: {
-    increment(state) {
-      state.counter++;
-    },
-    decrement(state) {
-      state.counter--;
-    },
-    increase(state, action) {
-      state.counter = state.counter + action.payload;
-    },
-    toggleCounter(state) {
-      state.showCounter = !state.showCounter;
-    },
-  },
-});
-
-const authSlice = createSlice({
-  name: "authentication",
-  initialState: initialAuthState,
-  reducers: {
-    login(state) {
-      state.isAuthenticated = true;
-    },
-    logout(state) {
-      state.isAuthenticated = false;
-    },
-  },
-});
+import counterReducer from "./counte-slice";
+import authReducer from "./auth-slice";
 
 // function counterReducer(state = initialState, action) {
 //   if (action.type === "increment") {
@@ -64,7 +33,7 @@ const authSlice = createSlice({
 
 // const store = createStore(counterSlice.reducer);
 const store = configureStore({
-  reducer: { counter: counterSlice.reducer, auth: authSlice.reducer },
+  reducer: { counter: counterReducer, auth: authReducer },
 });
 
 // //Subscriber with data store
@@ -77,6 +46,4 @@ const store = configureStore({
 
 //Now we want subscribe with component
 
-export const counterActions = counterSlice.actions;
-export const authActions = authSlice.actions;
 export default store;
