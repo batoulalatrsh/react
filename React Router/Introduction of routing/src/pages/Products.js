@@ -12,7 +12,7 @@ export default function Products() {
       <ul>
         {PRODUCTS.map((prod) => (
           <li key={prod.id}>
-            <Link to={prod.id} relative="">{prod.title}</Link>
+            <Link to={prod.id}>{prod.title}</Link>
           </li>
         ))}
       </ul>
