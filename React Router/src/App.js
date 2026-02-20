@@ -2,12 +2,14 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
+  Navigate,
   RouterProvider,
 } from "react-router-dom";
 import HomePage from "./pages/Home";
 import Products from "./pages/Products";
 import RootLayout from "./pages/Root";
-
+import Error from "./pages/Error";
+import ProductDetailPage from "./pages/ProductDetail";
 
 // const routeDefenations = createRoutesFromElements(
 //   <Route>
@@ -20,13 +22,20 @@ import RootLayout from "./pages/Root";
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Navigate to="/root" replace />,
+  },
+  {
+    path: "/root",
+    errorElement: <Error />,
     element: <RootLayout />,
     children: [
       {
-        path: "/",
+        index: true,
+
         element: <HomePage />,
       },
-      { path: "/products", element: <Products /> },
+      { path: "products", element: <Products /> },
+      { path: "products/:productId", element: <ProductDetailPage /> },
     ],
   },
 ]);
